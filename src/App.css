@@ -1,0 +1,31 @@
+body {
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.header {
+    color: red;
+    text-align: center;
+}
+
+.error{
+    color: red;
+    background: rgb(240, 151, 151);
+    font-size: 20px;
+    margin : 10px;
+    text-align: center;
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.success{
+    color: green;
+    background: rgb(127, 237, 167);
+    font-size: 20px;
+    margin : 10px;
+    text-align: center;
+    border: 1px solid green;
+    padding: 10px;
+    border-radius: 10px;
+}
