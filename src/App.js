@@ -7,8 +7,6 @@ import Notification from "./components/notification/Notification";
 import "./App.css";
 
 const App = () => {
-  const url = "http://localhost:3001/persons";
-
   const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState("");
   const [message, setMessage] = useState(null);
@@ -18,7 +16,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const resp = useAxios.get(url);
+    const resp = useAxios.get();
     resp
       .then((response) => {
         setPersons(response.data);
@@ -26,7 +24,7 @@ const App = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [url]);
+  }, []);
   return (
     <div>
       <h1 className={"header"}>Phonebook</h1>

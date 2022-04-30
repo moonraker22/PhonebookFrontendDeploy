@@ -8,7 +8,6 @@ const People = ({
   setMessageType,
 }) => {
   const deletePerson = (person) => {
-    // console.log(person);
     const result = window.confirm(
       "Are you sure you want to delete this person?"
     );
@@ -17,7 +16,6 @@ const People = ({
       const deleted = useAxios.remove(id);
       deleted
         .then((response) => {
-          console.log(response.statusText);
           setPersons(persons.filter((p) => p.id !== id));
           setMessage(`${person.name} was deleted`);
           setMessageType("success");

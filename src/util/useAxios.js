@@ -1,5 +1,11 @@
 import axios from "axios";
-const url = "http://localhost:3001/api/persons";
+// const url = "https://phonebook-backend-2022.herokuapp.com/api/persons";
+// const url = "/api/persons";
+const url = `${
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_DEV_URL
+    : process.env.REACT_APP_BASE_URL
+}/api/persons`;
 
 const get = async (req, res) => {
   const data = await axios.get(url);

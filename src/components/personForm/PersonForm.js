@@ -4,7 +4,6 @@ import useAxios from "../../util/useAxios";
 const PersonForm = ({ setPersons, persons, setMessage, setMessageType }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-
   const onNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -24,12 +23,11 @@ const PersonForm = ({ setPersons, persons, setMessage, setMessageType }) => {
       );
       if (result) {
         const id = existingPerson.id;
-        console.log(id, existingPerson);
         const updated = useAxios.update(id, newPerson);
-        console.log(updated);
         updated
           .then((response) => {
             console.log(response.statusText);
+            console.log(id);
             setPersons(
               persons.map((person) =>
                 person.id !== id
@@ -60,14 +58,14 @@ const PersonForm = ({ setPersons, persons, setMessage, setMessageType }) => {
         setNewNumber("");
       }
     } else {
-      const id = Math.floor(Math.random() * 100000);
-      setPersons([...persons, { ...newPerson, id }]);
+      // const id = Math.floor(Math.random() * 100000);
       setMessage(`Added ${newName} to phonebook`);
       setMessageType("success");
-      const added = useAxios.add({ name: newName, number: newNumber, id: id });
+      const added = useAxios.add({ name: newName, number: newNumber });
       added
         .then((response) => {
           console.log(response.statusText);
+          setPersons([...persons, { ...newPerson, id: response.data.id }]);
         })
         .catch((error) => {
           setMessage(`${newName} was not added`);
