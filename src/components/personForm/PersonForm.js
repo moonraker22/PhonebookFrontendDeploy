@@ -27,7 +27,6 @@ const PersonForm = ({ setPersons, persons, setMessage, setMessageType }) => {
         updated
           .then((response) => {
             console.log(response.statusText);
-            console.log(id);
             setPersons(
               persons.map((person) =>
                 person.id !== id
@@ -58,23 +57,29 @@ const PersonForm = ({ setPersons, persons, setMessage, setMessageType }) => {
         setNewNumber("");
       }
     } else {
-      // const id = Math.floor(Math.random() * 100000);
-      setMessage(`Added ${newName} to phonebook`);
-      setMessageType("success");
       const added = useAxios.add({ name: newName, number: newNumber });
       added
         .then((response) => {
-          console.log(response.statusText);
-          setPersons([...persons, { ...newPerson, id: response.data.id }]);
+          if (response?.data?.error?.errors?.name) {
+            setMessage(response.data.error.errors.name.message);
+            setMessageType("error");
+            setNewName("");
+            setNewNumber("");
+          } else if (response?.data?.error?.errors?.number) {
+            setMessage(response.data.error.errors.number.message);
+            setMessageType("error");
+            setNewName("");
+            setNewNumber("");
+          } else {
+            setPersons([...persons, response.data]);
+            setMessage(`${newName} was added`);
+            setMessageType("success");
+            setNewName("");
+            setNewNumber("");
+          }
         })
         .catch((error) => {
-          setMessage(`${newName} was not added`);
-          setMessageType("error");
           console.log(error);
-        })
-        .finally(() => {
-          setNewName("");
-          setNewNumber("");
         });
     }
   };
